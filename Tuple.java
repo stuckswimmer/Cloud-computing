@@ -1,6 +1,6 @@
 
 
-public class tuple {
+public class Tuple {
 		private String key=null;
 		private String value=null;
 
