@@ -1,6 +1,6 @@
 
 
-public class validation {
+public class Validation {
 	private static void failed(String input, String field) {
 		MasterUtils.printBeautiful((String.format("'%s' failed validation for %s", input, field)));
 	}
