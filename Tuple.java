@@ -33,7 +33,7 @@ public class Tuple {
 		}
 
 		/**
-		 * Converts the KVPair into a CSV-style string.
+		 * Converts the Tuple into a CSV-style string.
 		 *
 		 * @return String representation.
 		 */
