@@ -8,9 +8,9 @@ public class Printout {
      * @param rString   reducer String for text file
      * @param rCSV  reducer csv string for csv file
      */
-    public Printout(String rString,String rCSV){
-        this.reducerString = rString;
-        this.reducerCSV = rCSV;
+    public Printout(String lString,String lCSV){
+        this.reducerString = lString;
+        this.reducerCSV = lCSV;
     }
 
 
