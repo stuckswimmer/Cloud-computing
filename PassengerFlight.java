@@ -11,14 +11,14 @@ public class PassengerFlight {
 	     * Departure time (GMT):                   Format: 𝑛[10] (This is in Unix ‘epoch’ time)
 	     * Total flight time (mins):               Format: 𝑛[1. .4]
 	     **/
-	    private Syntax[] passengerSyntax = {Syntax.CAPITAL_CASE,Syntax.CAPITAL_CASE,Syntax.CAPITAL_CASE,Syntax.NUMBER,
-	                            Syntax.NUMBER,Syntax.NUMBER,Syntax.NUMBER,Syntax.CAPITAL_CASE,Syntax.CAPITAL_CASE,Syntax.NUMBER};
-	    private Syntax[] flightSyntax = {Syntax.CAPITAL_CASE,Syntax.CAPITAL_CASE,Syntax.CAPITAL_CASE,Syntax.NUMBER,
-	            Syntax.NUMBER,Syntax.NUMBER,Syntax.NUMBER,Syntax.CAPITAL_CASE};
-	    private Syntax[] sourceAirportSyntax = {Syntax.CAPITAL_CASE,Syntax.CAPITAL_CASE,Syntax.CAPITAL_CASE};
-	    private Syntax[] destinationAirportSyntax = {Syntax.CAPITAL_CASE,Syntax.CAPITAL_CASE,Syntax.CAPITAL_CASE};
-	    private Syntax[] departureTimeSyntax = {Syntax.NUMBER,Syntax.NUMBER,Syntax.NUMBER,Syntax.NUMBER,Syntax.NUMBER,
-	            Syntax.NUMBER,Syntax.NUMBER,Syntax.NUMBER,Syntax.NUMBER,Syntax.NUMBER};
+	    private Validation[] passengerSyntax = {Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.NUMBER,
+	    		Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.NUMBER};
+	    private Validation[] flightSyntax = {Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.NUMBER,
+	    		Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.CAPITAL_CASE};
+	    private Validation[] sourceAirportSyntax = {Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.CAPITAL_CASE};
+	    private Validation[] destinationAirportSyntax = {Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.CAPITAL_CASE};
+	    private Validation[] departureTimeSyntax = {Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,
+	    		Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.NUMBER};
 	    private String passengerId;
 	    private String flightId;
 	    private String departAirport;
@@ -66,24 +66,24 @@ public class PassengerFlight {
 	        String errorString = "";
 	        // check validity of each variable according to their syntax.
 	        // If true then invalid
-	        Boolean passenger = checkInValid(passengerSyntax,pId);
-	        Boolean flight = checkInValid(flightSyntax,fId);
-	        Boolean source = checkInValid(sourceAirportSyntax,dAirport);
-	        Boolean destination = checkInValid(destinationAirportSyntax,aAirport);
-	        Boolean depatureTime = checkInValid(departureTimeSyntax,dTime);
+	        Boolean passenger = checkValid(passengerSyntax,pId);
+	        Boolean flight = checkValid(flightSyntax,fId);
+	        Boolean depart = checkValid(sourceAirportSyntax,dAirport);
+	        Boolean arrive = checkValid(destinationAirportSyntax,aAirport);
+	        Boolean departureTime = checkValid(departureTimeSyntax,dTime);
 	        Boolean flightTime = false;
 	        if(fTime.length()<1 || fTime.length()>4){
 	            flightTime = true;
 	        }
-	        if(passenger || flight || source || destination || depatureTime || flightTime){
+	        if(passenger || flight || depart || arrive || departureTime || flightTime){
 	            String errorWith = "";
-	            // if each varible is true add the column name to the error with to output what columns are errored
+	            // if each variable is true add the column name to the error with to output what columns are in error
 	            if(passenger){
-	                int orginalLength = this.passengerId.length();
+	                int originalLength = this.passengerId.length();
 	                this.passengerId = this.passengerId.replaceAll("\\P{Print}","");
 	                int replacementLength = this.passengerId.length();
 	                // if length has changed it has found and unreadable character and replaced it
-	                if(orginalLength != replacementLength && !checkInValid(passengerSyntax,this.passengerId.toCharArray())){
+	                if(originalLength != replacementLength && !checkValid(passengerSyntax,this.passengerId.toCharArray())){
 	                    this.errorCorrection = true;
 	                    this.errorMessage = "Unreadable character detected and Corrected "+this.passengerId;
 	                }
@@ -92,13 +92,13 @@ public class PassengerFlight {
 	            if(flight){
 	                errorWith+=", FlightID";
 	            }
-	            if(source){
+	            if(depart){
 	                errorWith+=", Departure Airport";
 	            }
-	            if(destination){
+	            if(arrive){
 	                errorWith+=", Arrival Airport";
 	            }
-	            if(depatureTime){
+	            if(departureTime){
 	                errorWith+=", Departure Time";
 	            }
 	            if(flightTime){
@@ -121,7 +121,7 @@ public class PassengerFlight {
 	     * @param values    value
 	     * @return  if true then invalid
 	     */
-	    Boolean checkInValid(Syntax[] accepted ,char[] values){
+	    Boolean checkValid(Validation[] accepted ,char[] values){
 	        for(int x=0;x<values.length;x++){
 	            switch (accepted[x]){
 	                case CAPITAL_CASE:
@@ -204,4 +204,3 @@ public class PassengerFlight {
 	    }
 
 }
-
