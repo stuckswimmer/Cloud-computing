@@ -1,44 +1,46 @@
 
-
 public class Airport {
-	String name;
-	String faaCode;
-	double lat;
-	double lon;
-	private Integer numOfFlightsFrom;
+	/**
+    * Airport name: Format: 𝑋 [3. .20]
+    * Airport IATA/FAA code:  Format: 𝑋𝑋𝑋
+    * Latitude: Format: 𝑛. 𝑛 [3. .13]
+    * Longitude: Format: 𝑛. 𝑛 [3. .13]
+    **/
 
-	
-	Airport(String _name, String _faaCode, String _lat, String _lon){
-		this.name=_name;
-		this.faaCode=_faaCode;
-		this.numOfFlightsFrom = 0;
-		
-		try {
-		this.lat=Double.parseDouble(_lat);
-		this.lon=Double.parseDouble(_lon);
-		}
-		catch (Exception e) {
-            this.lat = 0.0;
-            this.lon = 0.0;
-		}
-	}
-	public String getName() {
-		return this.name;
-	}
-	public String getFAA() {
-		return this.faaCode;
-	}
-	public double getLat() {
-		return this.lat;
-	}
-	public double getLon() {
-		return this.lon;
-	}
-	public String toString() {
-		return name+" ("+faaCode+") is at "+lat+" by "+lon;
-	}
-	public String toString(String name) {
-		return name+" ("+faaCode+") is at "+lat+" by "+lon;
-	}
+   private String airportName;
+   private String faaCode;
+   private Float latitude;
+   private Float longitude;
+
+   /**
+    * Constructor for Airport
+    *
+    * @param name  name of airport
+    * @param code  airport code
+    * @param lat   latitude
+    * @param lon   longitude
+    */
+   public Airport(String name, String code, Float lat, Float lon){
+       this.airportName = name;
+       this.faaCode = code;
+       this.latitude = lat;
+       this.longitude = lon;
+   }
+
+   /**
+    * Get airport name
+    * @return
+    */
+   public String getAirportName() {
+       return airportName;
+   }
+   public Float getAirportLat() {
+       return latitude;
+   }
+   public Float getAirportLon() {
+       return longitude;
+   }
 
 }
+
+
