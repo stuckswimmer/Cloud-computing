@@ -15,8 +15,8 @@ public class PassengerFlight {
 	    		Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.NUMBER};
 	    private Validation[] flightSyntax = {Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.NUMBER,
 	    		Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.CAPITAL_CASE};
-	    private Validation[] sourceAirportSyntax = {Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.CAPITAL_CASE};
-	    private Validation[] destinationAirportSyntax = {Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.CAPITAL_CASE};
+	    private Validation[] departAirportSyntax = {Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.CAPITAL_CASE};
+	    private Validation[] arriveAirportSyntax = {Validation.CAPITAL_CASE,Validation.CAPITAL_CASE,Validation.CAPITAL_CASE};
 	    private Validation[] departureTimeSyntax = {Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,
 	    		Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.NUMBER,Validation.NUMBER};
 	    private String passengerId;
@@ -68,8 +68,8 @@ public class PassengerFlight {
 	        // If true then invalid
 	        Boolean passenger = checkValid(passengerSyntax,pId);
 	        Boolean flight = checkValid(flightSyntax,fId);
-	        Boolean depart = checkValid(sourceAirportSyntax,dAirport);
-	        Boolean arrive = checkValid(destinationAirportSyntax,aAirport);
+	        Boolean depart = checkValid(departAirportSyntax,dAirport);
+	        Boolean arrive = checkValid(arriveAirportSyntax,aAirport);
 	        Boolean departureTime = checkValid(departureTimeSyntax,dTime);
 	        Boolean flightTime = false;
 	        if(fTime.length()<1 || fTime.length()>4){
@@ -90,12 +90,36 @@ public class PassengerFlight {
 	                errorWith+=", PassengerID";
 	            }
 	            if(flight){
+	            	int originalLength = this.flightId.length();
+	                this.flightId = this.flightId.replaceAll("\\P{Print}","");
+	                int replacementLength = this.flightId.length();
+	                // if length has changed it has found and unreadable character and replaced it
+	                if(originalLength != replacementLength && !checkValid(flightSyntax,this.flightId.toCharArray())){
+	                    this.errorCorrection = true;
+	                    this.errorMessage = "Unreadable character detected and Corrected "+this.flightId;
+	                }
 	                errorWith+=", FlightID";
 	            }
 	            if(depart){
+	            	int originalLength = this.departAirport.length();
+	                this.departAirport = this.departAirport.replaceAll("\\P{Print}","");
+	                int replacementLength = this.departAirport.length();
+	                // if length has changed it has found and unreadable character and replaced it
+	                if(originalLength != replacementLength && !checkValid(departAirportSyntax,this.departAirport.toCharArray())){
+	                    this.errorCorrection = true;
+	                    this.errorMessage = "Unreadable character detected and Corrected "+this.departAirport;
+	                }
 	                errorWith+=", Departure Airport";
 	            }
 	            if(arrive){
+	            	int originalLength = this.arriveAirport.length();
+	                this.arriveAirport = this.arriveAirport.replaceAll("\\P{Print}","");
+	                int replacementLength = this.arriveAirport.length();
+	                // if length has changed it has found and unreadable character and replaced it
+	                if(originalLength != replacementLength && !checkValid(arriveAirportSyntax,this.arriveAirport.toCharArray())){
+	                    this.errorCorrection = true;
+	                    this.errorMessage = "Unreadable character detected and Corrected "+this.arriveAirport;
+	                }
 	                errorWith+=", Arrival Airport";
 	            }
 	            if(departureTime){
