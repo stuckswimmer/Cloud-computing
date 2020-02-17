@@ -62,11 +62,11 @@ public class Main {
         String errorString = "";
         System.out.println("-------RUNNING MAPPER 1----");
         // Split the lines in to equal chunks
-        ArrayList<ArrayList<String>> lineChunks = StaticClass.getChunks(passengerLines,10);
+        ArrayList<ArrayList<String>> chunks = StaticClass.getChunks(passengerLines,10);
         ArrayList<ThreadController> mapperThreads = new ArrayList<ThreadController>();
         // for each chunk make a new thread to run the mapper 
-        for (int x=0;x<lineChunks.size();x++){
-            ThreadController mapperThread = new ThreadController("mapper1"+x,lineChunks.get(x),1,x*10);
+        for (int x=0;x<chunks.size();x++){
+            ThreadController mapperThread = new ThreadController("mapper1"+x,chunks.get(x),1,x*10);
             // start the thread
             mapperThread.start();
             // add the mapper to the thread list
@@ -112,12 +112,12 @@ public class Main {
                 // wait for all threads to finish by joining them
                 threads.get(x).thread.join();
             } catch (InterruptedException e) {
-                System.out.println("Main Thread interuppted");
+                System.out.println("Main Thread interrupted");
                 e.printStackTrace();
             }
         }
         String reducedOutput = "";
-        // get the output from each reducer thread and add it to the ouput list
+        // get the output from each reducer thread and add it to the list
         for(int x=0;x<threads.size();x++){
             Printout output = threads.get(x).reducerOutput;
             reducedOutput+= output.reducerString;
@@ -132,7 +132,7 @@ public class Main {
         System.out.println(missingAirports.reducerString);
         String[] headings = {"Airport","Airport Code","Flights From Airport"};
         String[] additionalHeadings = {"Airport Code", "Airport Name"};
-        StaticClass.makeTxtFile("Objetive1ERRORS.log",errorString);
+        StaticClass.makeTxtFile("Objective1Errors.log",errorString);
         StaticClass.objective1CSVString = StaticClass.createCSVString(headings,reducer1Output,additionalHeadings,missingAirports.reducerCSV);
         StaticClass.objective1TextString = reducedOutput;
         return reducedOutput;
@@ -149,11 +149,11 @@ public class Main {
         String errorString = "";
         System.out.println("-------RUNNING MAPPER 2----");
         // Split the lines in to equal chunks
-        ArrayList<ArrayList<String>> lineChunks = StaticClass.getChunks(passengerLines,10);
+        ArrayList<ArrayList<String>> chunks = StaticClass.getChunks(passengerLines,10);
         ArrayList<ThreadController> mapperThreads = new ArrayList<ThreadController>();
         // for each chunk make a new thread to run the mapper 
-        for (int x=0;x<lineChunks.size();x++){
-            ThreadController mapperThread = new ThreadController("mapper2"+x,lineChunks.get(x),2,x*10);
+        for (int x=0;x<chunks.size();x++){
+            ThreadController mapperThread = new ThreadController("mapper2"+x,chunks.get(x),2,x*10);
             // start the thread
             mapperThread.start();
             // add the mapper to the thread list
@@ -229,11 +229,11 @@ public class Main {
         String errorString = "";
         System.out.println("-------RUNNING MAPPER 3----");
         // Split the lines in to equal chunks
-        ArrayList<ArrayList<String>> lineChunks = StaticClass.getChunks(passengerLines,10);
+        ArrayList<ArrayList<String>> chunks = StaticClass.getChunks(passengerLines,10);
         ArrayList<ThreadController> mapperThreads = new ArrayList<ThreadController>();
         // for each chunk make a new thread to run the mapper
-        for (int x=0;x<lineChunks.size();x++){
-            ThreadController mapperThread = new ThreadController("mapper3"+x,lineChunks.get(x),3,x*10);
+        for (int x=0;x<chunks.size();x++){
+            ThreadController mapperThread = new ThreadController("mapper3"+x,chunks.get(x),3,x*10);
             // start the thread
             mapperThread.start();
             // add the mapper to the thread list
@@ -301,11 +301,11 @@ public class Main {
         String errorString = "";
         System.out.println("-------RUNNING MAPPER 4----");
         // Split the lines in to equal chunks
-        ArrayList<ArrayList<String>> lineChunks = StaticClass.getChunks(passengerLines,10);
+        ArrayList<ArrayList<String>> chunks = StaticClass.getChunks(passengerLines,10);
         ArrayList<ThreadController> mapperThreads = new ArrayList<ThreadController>();
-        // for each chunk make a new thread to run mapper 1
-        for (int x=0;x<lineChunks.size();x++){
-            ThreadController mapperThread = new ThreadController("mapper4"+x,lineChunks.get(x),4,x*10);
+        // for each chunk make a new thread to run mapper
+        for (int x=0;x<chunks.size();x++){
+            ThreadController mapperThread = new ThreadController("mapper4"+x,chunks.get(x),4,x*10);
             // start the thread
             mapperThread.start();
             // add the mapper to the thread list
