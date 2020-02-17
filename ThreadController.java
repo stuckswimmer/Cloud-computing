@@ -14,7 +14,7 @@ public class ThreadController implements Runnable{
     private String reducerKey;
     public String error = "";
     public ArrayList<KVPair> mapperOutput;
-    public ReducerOutput reducerOutput;
+    public Printout reducerOutput;
 
     /**
      * ThreadClass Constructor for mapper
@@ -199,7 +199,7 @@ public class ThreadController implements Runnable{
      * @param values    values of flights
      * @return
      */
-     public ReducerOutput reducer1(String key, ArrayList<Object> values){
+     public Printout reducer1(String key, ArrayList<Object> values){
         ArrayList<String> flights = new ArrayList<String>();
         for(int x=0;x<values.size();x++){
             String flightID = String.valueOf(values.get(x));
@@ -214,7 +214,7 @@ public class ThreadController implements Runnable{
         reducerString += "Flights From Airport: "+ flights.size()+"\r\n";
         String[] options = {airportName,key,String.valueOf(flights.size())};
         String rCSV = StaticClass.makeCSVRow(options);
-        return new ReducerOutput(reducerString,rCSV);
+        return new Printout(reducerString,rCSV);
     }
 
 
@@ -225,7 +225,7 @@ public class ThreadController implements Runnable{
      * @param values    Value of passenger flights
      * @return
      */
-    public ReducerOutput reducer2(String key, ArrayList<Object> values){
+    public Printout reducer2(String key, ArrayList<Object> values){
         PassengerFlight flight = (PassengerFlight) values.get(0);
 
         String arrivalTime = new SimpleDateFormat("HH:mm:ss").format(flight.getArrivalTime());
@@ -251,7 +251,7 @@ public class ThreadController implements Runnable{
         String[] options = {key,String.valueOf(flight.getDepartureTime()),String.valueOf(flight.getFlightTime()),arrivalTime,
                 flight.getDepartAirport(),flight.getArriveAirport(),passengerString};
         String rCSV = StaticClass.makeCSVRow(options);
-        return new ReducerOutput(reducerString,rCSV);
+        return new Printout(reducerString,rCSV);
 
 
     }
@@ -263,7 +263,7 @@ public class ThreadController implements Runnable{
      * @param values value of passenger flights
      * @return
      */
-    public ReducerOutput reducer3(String key, ArrayList<Object> values){
+    public Printout reducer3(String key, ArrayList<Object> values){
     	
 
         String reducerString = "";
@@ -281,7 +281,7 @@ public class ThreadController implements Runnable{
         reducerString += "Passengers on Flight: "+count;
         String[] options = {key,String.valueOf(count)};
         String rCSV = StaticClass.makeCSVRow(options);
-        return new ReducerOutput(reducerString,rCSV);
+        return new Printout(reducerString,rCSV);
 
     }
     
@@ -293,7 +293,7 @@ public class ThreadController implements Runnable{
      * 
      * @return
      */
-    public ReducerOutput reducer4(String key, ArrayList<Object> values){
+    public Printout reducer4(String key, ArrayList<Object> values){
     	PassengerFlight flight = (PassengerFlight) values.get(0);
     	String departAirport = StaticClass.airportHashMap.get(flight.getDepartAirport()).getAirportName();
     	String arriveAirport = StaticClass.airportHashMap.get(flight.getArriveAirport()).getAirportName();
@@ -323,7 +323,7 @@ public class ThreadController implements Runnable{
         
         String[] options ={flight.getDepartAirport(),flight.getArriveAirport(),String.valueOf(nauticalMiles),passengerString};
         String rCSV = StaticClass.makeCSVRow(options);
-        return new ReducerOutput(reducerString,rCSV);
+        return new Printout(reducerString,rCSV);
 
     }
 
