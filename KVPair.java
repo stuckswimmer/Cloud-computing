@@ -31,5 +31,9 @@ public class KVPair {
     public Object getValue() {
         return value;
     }
+	
+    public String toString() {
+		return this.key + "," + this.value;
+	}
 
 }
