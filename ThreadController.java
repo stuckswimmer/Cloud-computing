@@ -109,7 +109,7 @@ public class ThreadController implements Runnable{
      * @param x position in mapper
      * @return  passenger
      */
-    PassengerFlight checkForError(String[] row,int x){
+    PassengerDetails checkForError(String[] row,int x){
         String passengerId = row[0];
         String flightId = row[1];
         String startingAirport = row[2];
@@ -130,7 +130,7 @@ public class ThreadController implements Runnable{
             System.err.println("Error at "+(x+mapperOffset+1)+": Destination airport does not exist in airport list ("+destinationAirport+")");
         } else{
             // If when contructing passanger error is created then print error or error correction else return passenger
-            PassengerFlight passengerFlight = new PassengerFlight(passengerId,flightId,startingAirport,destinationAirport,departureTime,flightTime);
+            PassengerDetails passengerFlight = new PassengerDetails(passengerId,flightId,startingAirport,destinationAirport,departureTime,flightTime);
             if(passengerFlight.error){
                 this.error += "Error at "+(x+mapperOffset+1)+": "+passengerFlight.errorMessage+"\r\n";
             }
@@ -153,7 +153,7 @@ public class ThreadController implements Runnable{
         ArrayList<KVPair> mapValue = new ArrayList<KVPair>();
         for(int x=0;x<mapperLines.size();x++){
             String[] row = mapperLines.get(x).split(",");
-            PassengerFlight passengerFlight = checkForError(row,x);
+            PassengerDetails passengerFlight = checkForError(row,x);
                 if (passengerFlight != null && !passengerFlight.error){
                     KVPair keyValue = new KVPair(row[2],row[1]);
                     mapValue.add(keyValue);
@@ -181,7 +181,7 @@ public class ThreadController implements Runnable{
         ArrayList<KVPair> mapValue = new ArrayList<KVPair>();
         for (int x=0;x<mapperLines.size();x++){
             String[] row = mapperLines.get(x).split(",");
-            PassengerFlight passengerFlight = checkForError(row,x);
+            PassengerDetails passengerFlight = checkForError(row,x);
             if (passengerFlight != null && !passengerFlight.error){
                 KVPair keyValue = new KVPair(row[1],passengerFlight);
                 mapValue.add(keyValue);
@@ -226,7 +226,7 @@ public class ThreadController implements Runnable{
      * @return
      */
     public Printout reducer2(String key, ArrayList<Object> values){
-        PassengerFlight flight = (PassengerFlight) values.get(0);
+        PassengerDetails flight = (PassengerDetails) values.get(0);
 
         String arrivalTime = new SimpleDateFormat("HH:mm:ss").format(flight.getArrivalTime());
         String reducerString = "";
@@ -239,7 +239,7 @@ public class ThreadController implements Runnable{
         reducerString += "Passengers:           "+"\r\n";
         String passengerString = "";
         for(int x=0;x<values.size();x++){
-            PassengerFlight passenger = (PassengerFlight) values.get(x);
+            PassengerDetails passenger = (PassengerDetails) values.get(x);
             // Check if the passenger is in the hashmap if not add it to the list if it is then discard duplicates
             if(!StaticClass.passengerObjective2Hash.containsKey(passenger.getPassengerId())){
                 StaticClass.passengerObjective2Hash.put(passenger.getPassengerId(),passenger.getPassengerId());
@@ -270,7 +270,7 @@ public class ThreadController implements Runnable{
 
         int count = 0;
         for(int x=0;x<values.size();x++){
-            PassengerFlight passenger = (PassengerFlight) values.get(x);
+            PassengerDetails passenger = (PassengerDetails) values.get(x);
             // Check if the passenger is in the hashmap if not add it to the list if it is then discard duplicates
             if(!StaticClass.passengerObjective3Hash.containsKey(passenger.getPassengerId())){
                 StaticClass.passengerObjective3Hash.put(passenger.getPassengerId(),passenger.getPassengerId());
@@ -294,7 +294,7 @@ public class ThreadController implements Runnable{
      * @return
      */
     public Printout reducer4(String key, ArrayList<Object> values){
-    	PassengerFlight flight = (PassengerFlight) values.get(0);
+    	PassengerDetails flight = (PassengerDetails) values.get(0);
     	String departAirport = StaticClass.airportHashMap.get(flight.getDepartAirport()).getAirportName();
     	String arriveAirport = StaticClass.airportHashMap.get(flight.getArriveAirport()).getAirportName();
     	Float deplat=StaticClass.airportHashMap.get(flight.getDepartAirport()).getAirportLat();
@@ -312,7 +312,7 @@ public class ThreadController implements Runnable{
         String passengerString = "";
 
         for(int x=0;x<values.size();x++){
-            PassengerFlight passenger = (PassengerFlight) values.get(x);
+            PassengerDetails passenger = (PassengerDetails) values.get(x);
             // Check if the passenger is in the hashmap if not add it to the list if it is then discard duplicates
             if(!StaticClass.passengerObjective4Hash.containsKey(passenger.getPassengerId())){
                 StaticClass.passengerObjective4Hash.put(passenger.getPassengerId(),passenger.getPassengerId());
