@@ -13,12 +13,8 @@ public class Main {
 
 
     /**
-     * Get lines from files
-     *
-     */
-
-    /**
-     * Get airport data locally
+     * Get lines from files and
+     * get airport data into local memory
      */
     public static void getAirportData(){
         airportLines = StaticClass.getData("./src/Top30_airports_LatLong.csv");
@@ -62,7 +58,7 @@ public class Main {
         String errorString = "";
         System.out.println("-------RUNNING MAPPER 1----");
         // Split the lines in to equal chunks
-        ArrayList<ArrayList<String>> chunks = StaticClass.getChunks(passengerLines,10);
+        ArrayList<ArrayList<String>> chunks = StaticClass.partitionData(passengerLines,10);
         ArrayList<ThreadController> mapperThreads = new ArrayList<ThreadController>();
         // for each chunk make a new thread to run the mapper 
         for (int x=0;x<chunks.size();x++){
@@ -89,7 +85,7 @@ public class Main {
             // get the mapper output from each thread and add it to the shuffled output
             errorString += mapperThreads.get(x).error;
             ArrayList<KVPair> mapperOutput = mapperThreads.get(x).mapperOutput;
-            shuffledOutput = StaticClass.shuffler(mapperOutput,shuffledOutput);
+            shuffledOutput = StaticClass.shuffleSort(mapperOutput,shuffledOutput);
         }
 
         System.out.println("--------END OF MAPPER 1----------");
@@ -149,7 +145,7 @@ public class Main {
         String errorString = "";
         System.out.println("-------RUNNING MAPPER 2----");
         // Split the lines in to equal chunks
-        ArrayList<ArrayList<String>> chunks = StaticClass.getChunks(passengerLines,10);
+        ArrayList<ArrayList<String>> chunks = StaticClass.partitionData(passengerLines,10);
         ArrayList<ThreadController> mapperThreads = new ArrayList<ThreadController>();
         // for each chunk make a new thread to run the mapper 
         for (int x=0;x<chunks.size();x++){
@@ -176,7 +172,7 @@ public class Main {
             // get the mapper output from each thread and add it to the shuffled output
             errorString += mapperThreads.get(x).error;
             ArrayList<KVPair> mapperOutput = mapperThreads.get(x).mapperOutput;
-            shuffledOutput = StaticClass.shuffler(mapperOutput,shuffledOutput);
+            shuffledOutput = StaticClass.shuffleSort(mapperOutput,shuffledOutput);
         }
         System.out.println("--------END OF MAPPER 2----------");
         System.out.println("--------SHUFFLER 2----------");
@@ -229,7 +225,7 @@ public class Main {
         String errorString = "";
         System.out.println("-------RUNNING MAPPER 3----");
         // Split the lines in to equal chunks
-        ArrayList<ArrayList<String>> chunks = StaticClass.getChunks(passengerLines,10);
+        ArrayList<ArrayList<String>> chunks = StaticClass.partitionData(passengerLines,10);
         ArrayList<ThreadController> mapperThreads = new ArrayList<ThreadController>();
         // for each chunk make a new thread to run the mapper
         for (int x=0;x<chunks.size();x++){
@@ -257,7 +253,7 @@ public class Main {
             // get the mapper output from each thread and add it to the shuffled output
             errorString += mapperThreads.get(x).error;
             ArrayList<KVPair> mapperOutput = mapperThreads.get(x).mapperOutput;
-            shuffledOutput = StaticClass.shuffler(mapperOutput,shuffledOutput);
+            shuffledOutput = StaticClass.shuffleSort(mapperOutput,shuffledOutput);
         }
         System.out.println("--------END OF MAPPER 3----------");
         System.out.println("--------SHUFFLER 3----------");
@@ -301,7 +297,7 @@ public class Main {
         String errorString = "";
         System.out.println("-------RUNNING MAPPER 4----");
         // Split the lines in to equal chunks
-        ArrayList<ArrayList<String>> chunks = StaticClass.getChunks(passengerLines,10);
+        ArrayList<ArrayList<String>> chunks = StaticClass.partitionData(passengerLines,10);
         ArrayList<ThreadController> mapperThreads = new ArrayList<ThreadController>();
         // for each chunk make a new thread to run mapper
         for (int x=0;x<chunks.size();x++){
@@ -329,7 +325,7 @@ public class Main {
             // get the mapper output from each thread and add it to the shuffled output
             errorString += mapperThreads.get(x).error;
             ArrayList<KVPair> mapperOutput = mapperThreads.get(x).mapperOutput;
-            shuffledOutput = StaticClass.shuffler(mapperOutput,shuffledOutput);
+            shuffledOutput = StaticClass.shuffleSort(mapperOutput,shuffledOutput);
         }
         System.out.println("--------END OF MAPPER 4----------");
         System.out.println("--------SHUFFLER 4----------");
