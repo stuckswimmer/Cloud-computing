@@ -54,16 +54,16 @@ public class MapReduceInterface extends Application{
         Label help = new Label(helpString);
         help.setWrapText(true);
 
-        Label obj1Label = new Label("Objective 1:");
+        Label obj1Label = new Label("Number of flights:");
         final TextArea obj1 = new TextArea();
 
-        Label obj2Label = new Label("Objective 2:");
+        Label obj2Label = new Label("Flight details:");
         final TextArea obj2 = new TextArea();
 
-        Label obj3Label = new Label("Objective 3:");
+        Label obj3Label = new Label("Number of Passengers:");
         final TextArea obj3 = new TextArea();
         
-        Label obj4Label = new Label("Objective 4:");
+        Label obj4Label = new Label("Distance Covered for each flight in Nautical Miles:");
         final TextArea obj4 = new TextArea();
 
         final Label outputPathLabel = new Label("File Output");
